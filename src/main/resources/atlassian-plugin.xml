@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2"> 
+  <plugin-info> 
+    <description>${project.description}</description>  
+    <version>${project.version}</version>  
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>  
+    <param name="plugin-icon">images/plugin-icon.png</param>
+		<param name="plugin-logo">images/plugin-logo.png</param>
+		<param name="plugin-banner">images/plugin-banner.png</param>
+		<param name="vendor-icon">images/vendor-icon.png</param>
+		<param name="vendor-logo">images/vendor-logo.png</param>
+		<param name="configure.url">/plugins/servlet/gov.dhs.ice.jira.plugin.customfields.admin/configuration</param>
+  </plugin-info>  
+
+
+  <servlet name="Configuration Servlet" key="rest-configuration-servlet"
+			 class="gov.dhs.ice.jira.plugin.customfields.admin.ConfigurationServlet">
+		<description key="configuration-servlet.description">Configuration Servlet for Rest endpoints</description>
+		<url-pattern>/gov.dhs.ice.jira.plugin.customfields.admin/configuration</url-pattern>
+	</servlet>
+  <!-- add our i18n resource -->  
+  <resource type="i18n" name="i18n" location="i18n"/>  
+  <!-- add our web resources -->  
+  <!--web-resource key="irmnetid-customfield-resources" name="irmnetid-customfield Web Resources"> 
+    <dependency>com.atlassian.auiplugin:ajs</dependency>  
+    <resource type="download" name="irmnetid-customfield.css" location="/css/irmnetid-customfield.css"/>  
+    <resource type="download" name="irmnetid-customfield.js" location="/js/irmnetid-customfield.js"/>  
+    <resource type="download" name="images/" location="/images"/>  
+    <context>irmnetid-customfield</context> 
+  </web-resource-->  
+  <webwork1 key="ajax-results" name="AJAX Results">
+		<description>AJAX results page.</description>
+		<actions>
+			<action name="gov.dhs.ice.jira.plugin.customfields.ajax.AjaxResultsPageAction" alias="ajaxResultsPageAction">
+				<view name="input">/templates/ajax-results.vm</view>
+			</action>
+		</actions>
+	</webwork1>
+  <web-resource key="rest-web-resources" name="Rest JavaScript and CSS">
+    <context>atl.general</context>
+    <context>jira.general</context>
+<!--        <dependency>com.atlassian.auiplugin:ajs</dependency>-->
+<!--        <dependency>com.atlassian.auiplugin:jquery</dependency>-->
+
+<!--        <resource type="download" name="images/ui-bg_glass_100_fdf5ce_1x400.png" location="css/images/ui-bg_glass_100_fdf5ce_1x400.png"/>-->
+    <resource type="download" name="jquery-min-js" location="js/jquery.min.js"/>
+    <resource type="download" name="rest-values-plugin.js" location="js/rest-values-plugin.js"/>
+
+    <resource type="download" name="jquery.auto-completeCD.css" location="js/pixabay/jquery.auto-completeCD.css"/>
+    <resource type="download" name="jquery.auto-completeCD.js" location="js/pixabay/jquery.auto-completeCD.js"/>
+
+</web-resource>
+  <customfield-type name="Irmnet Id Custom Field" i18n-name-key="irmnet-id-custom-field.name" 
+  key="irmnet-id-custom-field" class="gov.dhs.ice.jira.plugin.customfields.IrmnetIdCustomField"> 
+    <description key="irmnet-id-custom-field.description">The Irmnet Id Custom Field Plugin</description>  
+    <resource name="view" type="velocity" location="/templates/view.vm"/>  
+    <resource name="edit" type="velocity" location="/templates/edit.vm"/> 
+    <resource type="download" name="customfieldpreview.png" location="images/preview.png" />
+  </customfield-type>  
+
+  <customfield-searcher key="irmnetidfieldsearcher" name="irmnetid Values Searcher"
+						  class="gov.dhs.ice.jira.plugin.customfields.RestValuesSearcher">
+		<description>Allow to search for rest values.</description>
+		<resource type="velocity" name="label"
+				  location="templates/search/rest-label-searcher.vm"/>
+
+		<resource type="velocity" name="search" location="templates/search/search-rest.vm"/>
+		<resource type="velocity" name="view"  location="templates/search/search-view-rest.vm"/>
+
+		<valid-customfield-type package="${project.groupId}.${project.artifactId}" key="irmnet-id-custom-field"/>
+	</customfield-searcher>
+  
+</atlassian-plugin>

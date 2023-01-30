@@ -1,0 +1,5 @@
+#* @vtlvariable name="i18n" type="com.atlassian.jira.util.I18nHelper" *#
+#* @vtlvariable name="action" type="gov.dhs.ice.jira.plugin.customfields.ajax.AjaxResultsPageAction" *#
+#disable_html_escaping()
+
+$action.getHtml($i18n)

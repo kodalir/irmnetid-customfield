@@ -1,0 +1,17 @@
+#* @vtlvariable name="valuesViewHelper" type="gov.dhs.ice.jira.plugin.customfields.RestValuesViewHelper" *#
+#disable_html_escaping()
+
+#searcherHeader ($customField)
+
+#if( $valuesViewHelper )
+
+    #if ($valueObject)
+        #foreach ($option in $valueObject)
+            $valuesViewHelper.getStringForSearch( $option )#commaonly($valueObject)
+        #end
+    #end
+
+#else
+Plugin error
+#end
+#searcherFooter ($customField)
